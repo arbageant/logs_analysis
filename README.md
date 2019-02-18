@@ -45,7 +45,7 @@ one described in the introduction. Then, run the following:\
 $ python log_analysis.py
 
 Alternatively, you can run\
-$ chmod +x log_analysis.py
+$ chmod +x log_analysis.py\
 and then run the script with\
 $ ./log_analysis.py
 
