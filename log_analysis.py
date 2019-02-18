@@ -1,6 +1,9 @@
+#!/usr/bin/env python
+
 # Source code for logs analysis project
 # Author: Andrew Bageant
-# Updated 2019-02-16
+# Updated 2019-02-17
+
 
 import psycopg2
 
@@ -9,7 +12,7 @@ import psycopg2
 # find the top 3 most viewed articles
 q1 = '''SELECT count(*) AS count, title
     FROM log LEFT JOIN articles
-    ON log.path LIKE '%' || articles.slug || '%'
+    ON log.path = '/article/' || articles.slug
     WHERE title IS NOT NULL
     GROUP BY title
     ORDER BY count DESC
@@ -21,14 +24,18 @@ q2 = '''SELECT count(*) AS count, name
     (SELECT title, slug, name
     FROM articles LEFT JOIN authors
     ON articles.author = authors.id) t2
-    ON t1.path LIKE '%' || t2.slug || '%'
+    ON t1.path = '/article/' || t2.slug
     WHERE title IS NOT NULL
     GROUP BY name
     ORDER BY count DESC;'''
 
-# find days where the 404 Error response rate exceede 1% of total HTTP responses sent
+# find days where the 404 Error response rate exceed
+# 1% of total HTTP responses sent
 q3 = '''
-    SELECT sum(gstatus) AS ok, sum(bstatus) AS error, sum(bstatus)/(sum(gstatus)+sum(bstatus)) AS error_rate, date
+    SELECT sum(gstatus) AS ok,
+    sum(bstatus) AS error,
+    ROUND(sum(bstatus)/(sum(gstatus)+sum(bstatus)),4) AS error_rate,
+    TO_CHAR(date,'FMMonth dd, yyyy')
     FROM
     (SELECT time::date AS date, count(status) AS gstatus, NULL AS bstatus
     FROM log
@@ -40,7 +47,7 @@ q3 = '''
     WHERE status = '404 NOT FOUND'
     GROUP BY date) t1
     GROUP BY date
-    HAVING sum(bstatus)/(sum(gstatus)+sum(bstatus)) > 0.01
+    HAVING sum(bstatus)/(sum(gstatus)+sum(bstatus)) > 0.01;
     '''
 
 # open connection to "news" database
@@ -65,11 +72,11 @@ conn.close()
 # compose output string for each query
 s1 = ""
 for row in r1:
-    s1 = s1 + "{} --- {} views\n".format(row[1],row[0])
+    s1 = s1 + "{} --- {:,} views\n".format(row[1],row[0])
 
 s2 = ""
 for row in r2:
-    s2 = s2 + "{} --- {} views\n".format(row[1],row[0])
+    s2 = s2 + "{} --- {:,} views\n".format(row[1],row[0])
 
 s3 = ""
 for row in r3:
