@@ -1,6 +1,6 @@
-Logs Analysis
-Author: Andrew Bageant
-Last Updated: 2019-02-17
+Logs Analysis\
+Author: Andrew Bageant\
+Last Updated: 2019-02-17\
 
 # Introduction
 
@@ -36,7 +36,7 @@ website. It includes the path they attempted to access, as well as the
 status code they received in response (indicating whether an error
 occurred).
 
-To learn more about each of these tables, you can use the \d <table name>
+To learn more about each of these tables, you can use the \d "table name"
 command in psql.
 
 # Running the Code
