@@ -1,6 +1,6 @@
 Logs Analysis\
 Author: Andrew Bageant\
-Last Updated: 2019-02-17\
+Last Updated: 2019-02-17
 
 # Introduction
 
@@ -10,7 +10,7 @@ To learn more about the specific Vagrant/VirtualBox setup used here, you
 can look at the following repo from Udacity's GitHub:
 https://github.com/udacity/fullstack-nanodegree-vm/blob/master/vagrant/Vagrantfile
 
-This script uses the following Python packages:
+This script uses the following Python packages:\
 psycopg2
 
 # Database Setup
@@ -20,7 +20,7 @@ three specific questions.
 The news.sql database can be found here:
 https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip
 Prior to running this file, it will need to be composed in psql with
-the following command:
+the following command:\
 psql -d news -f newsdata.sql
 
 A brief summary of the data:
@@ -41,13 +41,13 @@ command in psql.
 
 # Running the Code
 To run the code, first use Vagrant to SSH into a virtual machine like the
-one described in the introduction. Then, run the following:
+one described in the introduction. Then, run the following:\
 $ python log_analysis.py
 
-Alternatively, you can run
+Alternatively, you can run\
 $ chmod +x log_analysis.py
-and then run the script with
-./log_analysis.py
+and then run the script with\
+$ ./log_analysis.py
 
 # Output
 The following three questions are answered in the ouptput of log_analysis.py:
