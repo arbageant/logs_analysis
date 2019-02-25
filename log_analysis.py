@@ -73,15 +73,15 @@ conn.close()
 # compose output string for each query
 s1 = ""
 for row in r1:
-    s1 = s1 + "{} --- {:,} views\n".format(row[1],row[0])
+    s1 += "{} --- {:,} views\n".format(row[1],row[0])
 
 s2 = ""
 for row in r2:
-    s2 = s2 + "{} --- {:,} views\n".format(row[1],row[0])
+    s2 += "{} --- {:,} views\n".format(row[1],row[0])
 
 s3 = ""
 for row in r3:
-    s3 = s3 + "{} --- {:.2%} error rate\n".format(row[3],row[2])
+    s3 += "{} --- {:.2%} error rate\n".format(row[3],row[2])
 
 # print output to output.txt file
 output = open("Output.txt", "w")
