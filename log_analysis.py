@@ -10,31 +10,32 @@ import psycopg2
 # define queries for each question
 
 # find the top 3 most viewed articles
-q1 = '''SELECT count(*) AS count, title
-    FROM log LEFT JOIN articles
+q1 = '''SELECT count, title
+    FROM articles INNER JOIN
+    (SELECT path, COUNT(path) AS count
+    FROM log
+    GROUP BY path) AS log
     ON log.path = '/article/' || articles.slug
-    WHERE title IS NOT NULL
-    GROUP BY title
     ORDER BY count DESC
     LIMIT 3;'''
 
 # order authors by number of views on their articles
-q2 = '''SELECT count(*) AS count, name
-    FROM log t1 LEFT JOIN
-    (SELECT title, slug, name
+q2 = '''SELECT SUM(count) AS count, name
+    FROM (SELECT title, slug, name
     FROM articles LEFT JOIN authors
     ON articles.author = authors.id) t2
+    INNER JOIN
+    (SELECT path, COUNT(path) AS count
+    FROM log
+    GROUP BY path) t1
     ON t1.path = '/article/' || t2.slug
-    WHERE title IS NOT NULL
     GROUP BY name
     ORDER BY count DESC;'''
 
 # find days where the 404 Error response rate exceed
 # 1% of total HTTP responses sent
 q3 = '''
-    SELECT sum(gstatus) AS ok,
-    sum(bstatus) AS error,
-    ROUND(sum(bstatus)/(sum(gstatus)+sum(bstatus)),4) AS error_rate,
+    SELECT ROUND(sum(bstatus)/(sum(gstatus)+sum(bstatus)),4) AS error_rate,
     TO_CHAR(date,'FMMonth dd, yyyy')
     FROM
     (SELECT time::date AS date, count(status) AS gstatus, NULL AS bstatus
