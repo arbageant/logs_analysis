@@ -7,6 +7,11 @@
 
 import psycopg2
 
+# define each question as a string, as well as a spacer row
+qs1 = "1. What are the three most popular articles of all time?\n"
+qs2 = "2. Who are the most popular article authors?\n"
+qs3 = "3. On which days did more than 1% of requests lead to errors?\n"
+spacer = "-----------------------------------------------------------\n"
 # define queries for each question
 
 # find the top 3 most viewed articles
@@ -81,13 +86,16 @@ for row in r2:
 
 s3 = ""
 for row in r3:
-    s3 += "{} --- {:.2%} error rate\n".format(row[3],row[2])
+    s3 += "{} --- {:.2%} error rate\n".format(row[1],row[0])
 
 # print output to output.txt file
 output = open("Output.txt", "w")
-output.write(s1)
-output.write("\n")
-output.write(s2)
-output.write("\n")
+
+output.write(qs1 + spacer)
+output.write(s1 + "\n")
+output.write(qs2 + spacer)
+output.write(s2 + "\n")
+output.write(qs3 + spacer)
 output.write(s3)
+
 output.close()
