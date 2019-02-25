@@ -1,8 +1,8 @@
-Logs Analysis\
+# Logs Analysis
 Author: Andrew Bageant\
 Last Updated: 2019-02-17
 
-# Introduction
+## Introduction
 
 This script is designed to be run in Python 2.7 on a virtual machine running
 Ubuntu 16.04. The preferred setup is a VirtualBox VM, managed via Vagrant.
@@ -13,11 +13,12 @@ https://github.com/udacity/fullstack-nanodegree-vm/blob/master/vagrant/Vagrantfi
 This script uses the following Python packages:\
 psycopg2
 
-# Database Setup
+## Database Setup
 This script analyzes the data in the news SQL database and provides answers to
 three specific questions.
 
-The news.sql database can be found here:
+The "news" database, along with the newsdata.sql setup script, can be found
+here:\
 https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip
 Prior to running this file, it will need to be composed in psql with
 the following command:\
@@ -39,7 +40,7 @@ occurred).
 To learn more about each of these tables, you can use the \d "table name"
 command in psql.
 
-# Running the Code
+## Running the Code
 To run the code, first use Vagrant to SSH into a virtual machine like the
 one described in the introduction. Then, run the following:\
 $ python log_analysis.py
@@ -49,7 +50,7 @@ $ chmod +x log_analysis.py\
 and then run the script with\
 $ ./log_analysis.py
 
-# Output
+## Output
 The following three questions are answered in the ouptput of log_analysis.py:
 1. What are the most popular three articles of all time?
 2. Who are the most popular article authors of all time?
